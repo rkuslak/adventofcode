@@ -1,0 +1,32 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.140.1/containers/rust
+{
+    "name": "Rust",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "runArgs": [
+        "--cap-add=SYS_PTRACE",
+        // Needed so podman can see the mounted workspace:
+        "--security-opt",
+        "label=disable",
+        // "seccomp=unconfined"
+    ],
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "lldb.executable": "/usr/bin/lldb",
+        // VS Code don't watch files under ./target
+        "files.watcherExclude": {
+            "**/target/**": true,
+            "test_data/**": true,
+        }
+    },
+    "extensions": [
+        "golang.go",
+        "dotjoshjohnson.xml",
+        "stkb.rewrap",
+    ]
+    // "forwardPorts": [],
+    // "postCreateCommand": "rustc --version",
+    // "remoteUser": "vscode"
+}
