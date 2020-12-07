@@ -20,8 +20,7 @@ namespace advent
                 }
 
                 var split = line.Split(" contain ", StringSplitOptions.None);
-                var key = split[0];
-                key = key.Replace("bags", "").Trim();
+                var key = cleanBagKey(split[0]);
 
                 _relationshipMap[key] = new Dictionary<string, int>();
 
@@ -29,6 +28,7 @@ namespace advent
                 {
                     continue;
                 }
+
                 var childLines = split[1].Split(
                         new[] { ", ", "." },
                         StringSplitOptions.RemoveEmptyEntries
@@ -39,8 +39,7 @@ namespace advent
                     var splitIdx = childLine.IndexOf(' ');
                     var bagAmountString = childLine.Substring(0, splitIdx);
                     var bagColor = childLine.Substring(splitIdx + 1);
-                    bagColor = bagColor.Replace("bags", "").Replace("bag", "").Trim();
-                    System.Console.WriteLine($"{key}: {bagAmountString} - {bagColor}");
+                    bagColor = cleanBagKey(bagColor);
                     var bagsAmount = int.Parse(bagAmountString);
                     _relationshipMap[key][bagColor] = bagsAmount;
                 }
@@ -48,18 +47,26 @@ namespace advent
             }
         }
 
-        public void StepOne()
+        private string cleanBagKey(string rawBagKey)
         {
-            var canContain = new HashSet<string>(FindBagsContaining("shiny gold"));
+            return rawBagKey
+                    .Replace("bags", "")
+                    .Replace("bag", "")
+                    .Trim();
+        }
+
+        public void StepOne(string bagName)
+        {
+            var canContain = new HashSet<string>(FindBagsContaining(bagName));
             var newBagNames = new List<string>(canContain);
 
             while (newBagNames.Count > 0)
             {
                 var foundBagNames = new List<string>();
 
-                foreach (var bagName in canContain)
+                foreach (var searchBagName in canContain)
                 {
-                    foundBagNames.AddRange(FindBagsContaining(bagName));
+                    foundBagNames.AddRange(FindBagsContaining(searchBagName));
                 }
                 newBagNames = new List<string>();
 
@@ -75,9 +82,9 @@ namespace advent
             System.Console.WriteLine($"{canContain.Count} matches");
         }
 
-        public void StepTwo()
+        public void StepTwo(string bagName)
         {
-            var totalBags = getSubbagCount("shiny gold");
+            var totalBags = getSubbagCount(bagName);
             System.Console.WriteLine($"{totalBags} total bags");
         }
 

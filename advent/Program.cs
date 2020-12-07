@@ -37,8 +37,8 @@
             var fileData = ReadFile(@"2020-07-input.txt");
 
             var a202007 = new Advent202007(fileData);
-            a202007.StepOne();
-            a202007.StepTwo();
+            a202007.StepOne("shiny gold");
+            a202007.StepTwo("shiny gold");
         }
     }
 }
