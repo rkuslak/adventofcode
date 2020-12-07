@@ -8,6 +8,28 @@
             "type": "shell",
             "command": "go build",
             "problemMatcher": "$go"
+        },
+        {
+            "label": "build csharp",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "build",
+                // Ask dotnet build to generate full paths for file names.
+                "/property:GenerateFullPaths=true",
+                // Do not generate summary otherwise it leads to duplicate errors in Problems panel
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/advent"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "focus": true,
+                "clear": true
+            },
+            "problemMatcher": "$msCompile"
         }
     ]
 }

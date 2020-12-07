@@ -3,7 +3,7 @@
 {
     "name": "advent",
     "build": {
-        "dockerfile": "Dockerfile"
+        "dockerfile": "Dockerfile.csharp"
     },
     "runArgs": [
         "--cap-add=SYS_PTRACE",
@@ -22,9 +22,11 @@
         }
     },
     "extensions": [
-        "golang.go",
+        // "golang.go",
         "dotjoshjohnson.xml",
         "stkb.rewrap",
+        "ms-dotnettools.csharp",
+        "fernandoescolar.vscode-solution-explorer",
     ]
     // "forwardPorts": [],
     // "postCreateCommand": "rustc --version",
