@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace advent
+﻿namespace advent
 {
-
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -14,10 +12,10 @@ namespace advent
         const String rootPath = @"/workspaces/advent";
 
 
-        public static List<String> ReadFile(String fileName)
+        public static List<string> ReadFile(string fileName)
         {
             var filePath = Path.Combine(rootPath, fileName);
-            var result = new List<String>();
+            var result = new List<string>();
 
             var inputFile = System.IO.File.ReadAllText(filePath);
 
@@ -36,10 +34,11 @@ namespace advent
 
         static void Main(string[] args)
         {
-            var fileData = ReadFile(@"2020-06-input.txt");
+            var fileData = ReadFile(@"2020-07-input.txt");
 
-            var a202006 = new Advent202006(fileData);
-            a202006.PartOne();
+            var a202007 = new Advent202007(fileData);
+            a202007.StepOne();
+            a202007.StepTwo();
         }
     }
 }
