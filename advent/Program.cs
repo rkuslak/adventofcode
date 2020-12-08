@@ -34,11 +34,11 @@
 
         static void Main(string[] args)
         {
-            var fileData = ReadFile(@"2020-07-input.txt");
+            var fileData = ReadFile(@"2020-08-input.txt");
 
-            var a202007 = new Advent202007(fileData);
-            a202007.StepOne("shiny gold");
-            a202007.StepTwo("shiny gold");
+            var a202008 = new Advent202008(fileData);
+            a202008.StepOne();
+            a202008.StepTwo();
         }
     }
 }
