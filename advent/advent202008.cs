@@ -5,7 +5,6 @@ using System.Collections.Generic;
 namespace advent
 {
     using ActionTuple = Tuple<string, int>;
-    using CommandListResponse = Tuple<int, bool>;
 
     public class Advent202008
     {
@@ -21,16 +20,16 @@ namespace advent
 
         public void StepOne()
         {
-            var accumulator = runCommands(_commandsList).Item1;
+            var accumulator = runCommands(_commandsList, true);
             System.Console.WriteLine($"Accumulator is {accumulator}.");
         }
 
         public void StepTwo()
         {
             var modableCommandsList = new List<ActionTuple>(_commandsList);
-            Tuple<int, bool> response;
             ActionTuple originalCommand;
             string newAction;
+            int? response;
 
             for (var commandIdx = 0; commandIdx < modableCommandsList.Count; commandIdx++)
             {
@@ -49,11 +48,11 @@ namespace advent
                 }
 
                 modableCommandsList[commandIdx] = new ActionTuple(newAction, originalCommand.Item2);
-                response = runCommands(modableCommandsList);
+                response = runCommands(modableCommandsList, false);
 
-                if (response.Item2)
+                if (null != response)
                 {
-                    System.Console.WriteLine($"Completed list accumulator is {response.Item1}");
+                    System.Console.WriteLine($"Completed list accumulator is {response}");
                     return;
                 }
 
@@ -70,7 +69,7 @@ namespace advent
             System.Console.WriteLine("No successful swap found");
         }
 
-        private CommandListResponse runCommands(List<ActionTuple> commandsList)
+        private int? runCommands(List<ActionTuple> commandsList, bool returnPartial)
         {
             var ranCommands = new HashSet<int>();
 
@@ -81,8 +80,9 @@ namespace advent
             {
                 if (ranCommands.Contains(commandIdx))
                 {
-                    return new CommandListResponse(accumulator, false);
+                    return returnPartial ? accumulator : null;
                 }
+
                 ranCommands.Add(commandIdx);
 
                 var action = commandsList[commandIdx].Item1;
@@ -106,7 +106,8 @@ namespace advent
                 }
             }
 
-            return new CommandListResponse(accumulator, true);
+            return accumulator;
+            // return new CommandListResponse(accumulator, true);
         }
 
         private List<ActionTuple> parseCommandsFile(IEnumerable<string> commandLines)
