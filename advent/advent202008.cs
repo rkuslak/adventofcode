@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 namespace advent
 {
-
-
     using ActionTuple = Tuple<string, int>;
     using CommandListResponse = Tuple<int, bool>;
 
@@ -59,7 +57,13 @@ namespace advent
                     return;
                 }
 
-                System.Console.WriteLine($"Swap on index {commandIdx} ({originalCommand.Item1} => {modableCommandsList[commandIdx].Item1}) failed to complete...");
+                System.Console.WriteLine(
+                    "Swap on index {0} ({1} => {2}) failed to complete",
+                    commandIdx,
+                    originalCommand.Item1,
+                    modableCommandsList[commandIdx].Item1
+                );
+
                 modableCommandsList[commandIdx] = originalCommand;
             }
 
