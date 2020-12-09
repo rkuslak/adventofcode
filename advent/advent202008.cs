@@ -10,13 +10,13 @@ namespace advent
     public class Advent202008
     {
 
-        IEnumerable<string> _fileList;
         List<ActionTuple> _commandsList;
+        const StringSplitOptions CommandLineSplitOptions =
+            StringSplitOptions.RemoveEmptyEntries & StringSplitOptions.TrimEntries;
 
         public Advent202008(IEnumerable<string> fileList)
         {
-            _fileList = fileList;
-            _commandsList = parseCommandsFile(_fileList);
+            _commandsList = parseCommandsFile(fileList);
         }
 
         public void StepOne()
@@ -111,32 +111,26 @@ namespace advent
 
         private List<ActionTuple> parseCommandsFile(IEnumerable<string> commandLines)
         {
+            string[] tokens;
+            int value;
+
             var commandsList = new List<ActionTuple>();
 
             foreach (var commandLine in commandLines)
             {
-                int value;
-                const StringSplitOptions SplitOptions =
-                    StringSplitOptions.RemoveEmptyEntries & StringSplitOptions.TrimEntries;
-
                 if (string.IsNullOrWhiteSpace(commandLine))
                 {
                     continue;
                 }
 
-                var tokens =
-                    commandLine
-                        .Trim()
-                        .Split(" ", SplitOptions);
-                var action = tokens[0];
-                if (int.TryParse(tokens[1], out value))
-                {
-                    commandsList.Add(new ActionTuple(action, value));
-                }
-                else
+                tokens = commandLine.Trim().Split(" ", CommandLineSplitOptions);
+                if (tokens.Length != 2 || !int.TryParse(tokens[1], out value))
                 {
                     System.Console.WriteLine($"Failed to parse line \"{commandLine}\"");
+                    continue;
                 }
+
+                commandsList.Add(new ActionTuple(tokens[0], value));
             }
 
             return commandsList;
