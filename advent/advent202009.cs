@@ -44,7 +44,7 @@ namespace advent
                 System.Console.WriteLine($"Invalid idx: {invalidIdx}: {_values[invalidIdx]}");
             }
 
-            return invalidIdxs.Count > 0 ? invalidIdxs[0] : -1;
+            return invalidIdxs.Count > 0 ? _values[invalidIdxs[0]] : -1;
         }
 
         public void StepTwo(long desiredSum)
