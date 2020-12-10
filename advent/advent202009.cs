@@ -26,7 +26,7 @@ namespace advent
             }
         }
 
-        public void StepOne()
+        public long StepOne()
         {
             var invalidIdxs = new List<int>();
             const int preamble = 25;
@@ -43,6 +43,26 @@ namespace advent
             {
                 System.Console.WriteLine($"Invalid idx: {invalidIdx}: {_values[invalidIdx]}");
             }
+
+            return invalidIdxs.Count > 0 ? invalidIdxs[0] : -1;
+        }
+
+        public void StepTwo(long desiredSum)
+        {
+            var (startIdx, endIdx) = findSumIndexes(desiredSum);
+
+            long lowValue = long.MaxValue;
+            long highValue = 0;
+
+            for (var idx = startIdx; idx <= endIdx; idx++)
+            {
+                if (_values[idx] > highValue) { highValue = _values[idx]; }
+                if (_values[idx] < lowValue) { lowValue = _values[idx]; }
+            }
+
+            long valuesSum = lowValue + highValue;
+
+            System.Console.WriteLine($"{startIdx} - {endIdx}: {lowValue} - {highValue}; {valuesSum}");
         }
 
         bool isValid(int compareIdx, long desiredValue, int preamble)
@@ -64,25 +84,6 @@ namespace advent
                 }
             }
             return false;
-        }
-
-        public void StepTwo()
-        {
-            const long desiredSum = 375054920;
-            var (startIdx, endIdx) = findSumIndexes(desiredSum);
-
-            long lowValue = long.MaxValue;
-            long highValue = 0;
-
-            for (var idx = startIdx; idx <= endIdx; idx++)
-            {
-                if (_values[idx] > highValue) { highValue = _values[idx]; }
-                if (_values[idx] < lowValue) { lowValue = _values[idx]; }
-            }
-
-            long valuesSum = lowValue + highValue;
-
-            System.Console.WriteLine($"{startIdx} - {endIdx}: {lowValue} - {highValue}; {valuesSum}");
         }
 
         private (int, int) findSumIndexes(long desiredSum)

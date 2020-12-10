@@ -35,10 +35,16 @@
         static void Main(string[] args)
         {
             var fileData = ReadFile(@"2020-09-input.txt");
-
             var adventure = new Advent202009(fileData);
-            adventure.StepOne();
-            adventure.StepTwo();
+
+            var desiredSum = adventure.StepOne();
+
+            if (desiredSum < 0)
+            {
+                System.Console.WriteLine("Failed to find a invalid entry");
+                return;
+            }
+            adventure.StepTwo(desiredSum);
         }
     }
 }
