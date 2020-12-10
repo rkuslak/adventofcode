@@ -98,6 +98,8 @@ namespace advent
                     {
                         return (startIdx, endIdx);
                     }
+
+                    if (sum > desiredSum) { break; }
                 }
             }
 
