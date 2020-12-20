@@ -32,8 +32,8 @@
 
         static void Main(string[] args)
         {
-            var fileData = ReadFile(@"2020-10-input.txt");
-            var adventure = new Advent202010(fileData);
+            var fileData = ReadFile(@"2020-11-input.txt");
+            var adventure = new Advent202011(fileData);
 
             adventure.StepOne();
             adventure.StepTwo();
