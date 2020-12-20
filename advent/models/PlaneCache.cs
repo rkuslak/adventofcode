@@ -117,10 +117,6 @@ namespace advent.models
         {
             var occupiedCount = _seatViewsOccupied[rowIdx][colIdx];
 
-            // We could speed this up a good deal by calculating it in a similar
-            // manner to how we're doing the straight diagonals, but since we
-            // didn't start this until several days after release we'll just
-            // using a simple cached lookup for now:
             if ((getStatusAtIndex(SearchDirection.UP_LEFT, rowIdx - 1, colIdx - 1)) == PlaneSeatStatus.OCCUPIED) occupiedCount++;
             if ((getStatusAtIndex(SearchDirection.UP_RIGHT, rowIdx - 1, colIdx + 1)) == PlaneSeatStatus.OCCUPIED) occupiedCount++;
             if ((getStatusAtIndex(SearchDirection.DOWN_LEFT, rowIdx + 1, colIdx - 1)) == PlaneSeatStatus.OCCUPIED) occupiedCount++;
@@ -138,20 +134,11 @@ namespace advent.models
                 return PlaneSeatStatus.EMPTY;
             }
 
-            var searchKey = new CacheKey(direction, row, col);
-            if (_cache.ContainsKey(searchKey))
-            {
-                Console.WriteLine("FOUND KEY");
-                return _cache[searchKey];
-            }
-
             switch (_planeSeats[row][col])
             {
                 case PlaneSeatStatus.EMPTY:
-                    _cache[searchKey] = PlaneSeatStatus.EMPTY;
                     return PlaneSeatStatus.EMPTY;
                 case PlaneSeatStatus.OCCUPIED:
-                    _cache[searchKey] = PlaneSeatStatus.OCCUPIED;
                     return PlaneSeatStatus.OCCUPIED;
             }
 
@@ -161,7 +148,6 @@ namespace advent.models
             else if (direction.HasFlag(SearchDirection.RIGHT)) col++;
 
             returnedStatus = getStatusAtIndex(direction, row, col);
-            _cache[searchKey] = returnedStatus;
             return returnedStatus;
         }
     }
